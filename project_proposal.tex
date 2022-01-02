@@ -1,0 +1,179 @@
+% \documentclass{article}
+% \usepackage[utf8]{inputenc}
+
+% \title{ee547_final}
+% \author{Ben Guo}
+% \date{November 2021}
+
+% \begin{document}
+
+% \maketitle
+
+% \section{Introduction}
+
+% \end{document}
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+\usepackage[html,dvipsnames]{xcolor}
+% \usepackage[
+%         bibencoding=utf8, 
+%         style=alphabetic
+%     ]{biblatex}
+
+
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9.0in}
+\headheight=0.5in
+\topmargin=-0.75in
+\oddsidemargin= 0.0in
+\evensidemargin=-0.25in
+
+
+\usepackage[pdfauthor={Brandon Franzke},pdftitle={EE 541 Project Proposal},% 
+pdftex,bookmarks]{hyperref} 
+\hypersetup{colorlinks,% 
+citecolor=green,% 
+filecolor=Orange,% 
+linkcolor=blue,% 
+urlcolor=BrickRed,% 
+pdftex} 
+
+
+
+\pagestyle{myheadings}
+\markright{{\bf EE 547 - \copyright Group 3 - Fall 2021} }
+
+\title{\bf {\small EE 547 -- Applied and Cloud Computing} \\ Project Proposal}
+\author{\copyright Group 3}
+
+\begin{document}
+\maketitle
+
+\section{Project Title}
+
+Programming Q\&A Platform 
+% Music Streaming Platform
+
+\section{Team Members}
+% Brandon Franzke, Xiou Ge, Bin Wang ({\bf should be 2-3 team members unless agreed upon earlier with instructors})
+Haoyu Guo, Ziyou Geng, Zhenyang Li
+
+\section{Summary and Description}
+In this project, we propose to build a coding forum website like Stack Overflow. 
+Users can post all kinds of questions about programming to the platform and can also answer questions from other users. Specifically, the website will have a question publishing module, a question list module and a question content module with functionalities for modifying content, deleting content and adding comments. The platform will also have a complete user management system, including user registration and login, authority management, personal information modification and profile picture upload.
+After development, We will deploy the whole project to AWS.  
+
+% \begin{figure}[htp]
+%     \centering
+%     \includegraphics[width=7cm]{p2}
+%     \caption{Vue dataflow}
+%     \label{fig:galaxy}
+% \end{figure}
+
+% The content management system can be used for various purposes such as new, blogs, official websites, forums and communities. 
+% In this project we propose to build a platform for artists to upload audio content for users to stream.
+% It will accept a wide variety of audio upload formats and preprocess (transcode) files into a range of formats and qualities suitable for streaming.
+% It will also extract audio from pre-taped video content.
+% We will send the content to AWS Transcribe to create an easily searchable database of spoken content.
+% Artists can designate content as private or public, or can allow only certain users to access files (by username).
+% The site will enforce these permissions on users that attempt to access this data.
+
+% As a reach goal we will integrate a music database such as MusicBrainz or Discogs.  
+% That would allow users to link uploads with album art and information from the music database.
+
+% \noindent
+% [... continue]
+
+\section{Proposed Architecture}
+
+Our project will consist of a client-side (Front-end) and a server-side (Back-end), plus databases and publishing services. Both the Front-end and the Back-end will adopt MVC pattern.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=10cm]{p2}
+    \caption{Vue dataflow}
+    \label{fig:galaxy}
+\end{figure}
+\\ The main technology stack is Vue.js + Node.js with Express + MongoDB with Mongoose. The technologies and libraries used at the Front-end and Back-end are described in detail below.
+% \begin{figure}[htp]
+%     \centering
+%     \includegraphics[width=10cm]{p1}
+%     \caption{Vue.js internal mechanism}
+%     \label{fig:galaxy}
+% \end{figure}
+\\ For the Front-end part, we will utilize Vue.js with Vue Router, VueX and Ant-Design-Vue UI library. The project will be initialized by Vue CLI. On this basis, text editing will be implemented with rich text editor module, user login and authority management will be realized based on JWT and all requests will be sent with Axios. 
+\\ For the Back-end part, We will utilize Express and Mongoose. RESTful API will be adopted and CRUD operations will be conducted by Mongoose. We will also implement user authentication, file uploading and downloading, Real-time notification and any other functionalities we find useful.
+
+% \section{Introduction}
+
+% We will create the backend server in Node.js and use GraphQL for the API.
+% Users will interact with the API through a front-end client (web-page).
+% We expect the app to include at least the following web pages.  
+% We will generate these pages as a combination of static assets and dynamic content using React.
+
+\begin{description}
+  \item[Login Page] Accept usernames and corresponding password, redirecting to \textbf{Home Page} if successfully verified. Return error message otherwise.
+%   \item[Sign-up] Join as an artist or user.  Gather basic info such as email, unique username, password, and preferred music genres
+  \item[Sign-up] Register as a user. Gather basic info such as email, unique username and password. (Probably more detailed information to gather user profile.)
+  \item[Home Page] Page with recommended questions, news and recent updates as the main interface
+  \item [Question Page] Full content of a specific question, let users answer questions and add comments.
+  \item [Content Editing] Page with rich text editor, enable users to edit and post questions.
+  \item [User Profile] Show user information and overview of the questions they have posted and answered.
+\end{description}
+We will use a local MongoDB database server to store user data and an AWS S3 to store the original and processed files in the cloud.  This will simplify the async processing pipeline.
+We will either use a task server to process content and report to the Back-end or investigate using AWS Amplify.
+% We expect to design the following reuseable components to provide consistent listening and playback features across the application.
+% \begin{description}
+%   \item [Player] Enable users to listen to audio on the site without allowing direct download.  Include selector to choose Streaming speed/quality (or Auto if we can determine how)
+%   \item [Playlist manager] Not a separate page, but a 
+% \end{description}
+
+\section{Datasources and Additional APIs}
+
+Users can post their own questions and the answers will be posted by other users. Data related to questions and answers will be stored in databases. 
+
+% \begin{itemize}
+%     \item 
+%     \item 
+%     \item
+%     \item
+% \end{itemize}
+% %   \item AWS Elastic Transcoder https://aws.amazon.com/elastictranscoder/pricing, SaaS API to manage audio processing.  Need to investigate if suits needs and if it justifies a larger expense.  Potentially more difficult to interact with.
+% \end{itemize}
+% \end{itemize}
+
+% \bibliography{bibliography}
+
+\section{References, Tutorials, Codebases, Documentation, and Libraries}  
+\begin{itemize}
+    \item \noindent [1] wangeditor: a useful rich text editor module. https://github.com/awamwang/vue-wangeditor-awesome
+    \item \noindent [2] Design and Implementation of a Vue.js-Based College Teaching System
+    \item \noindent [3] Vue 3.0 official documentation: https://v3.vuejs.org/api/
+\end{itemize}
+% Include any references, libraries, or additional documentation that you think may be helpful.
+% If you have found tutorials for any specific portions of your project include those here as well.
+
+
+\section{Estimated Compute Needs}  
+
+We will create a new private VPC in the AWS cloud.
+We anticipate a single t2.small server will suffice.
+We will use AWS Simple Queue Service (SQS) and Simple Notifiation Service (SNS) to control the async processing.
+We don't anticipate any unusual hardware or compute needs.
+
+\section{Team Roles} 
+
+The following is the rough breakdown of roles and responsibilities we plan for our team:
+\begin{itemize}
+\item Haoyu Guo: Primary: Back-end develop and API devise, MongoDB resolvers and database access.  Secondary: assist with some layout elements.
+\item Ziyou Geng: Primary: Front-end design. Secondary: Assist in API devise, ensure that client-side requests and Back-end API are compatible.
+% \item Zhenyang Li: Client UX and UI.  Primary: build client side interface for API and create rough pages with dynamic server content.  Secondary: assist with design and styling
+\item Zhenyang Li: Primary: Design test cases for the server-side, including Mocha and write JavaScript workflow code like CirclCI to implement continuous integration and delivery. Secondary: host the website in AWS
+\end{itemize}
+All team members will work on the final presentation, slides, and report. 
+
+
+ \end{document}
